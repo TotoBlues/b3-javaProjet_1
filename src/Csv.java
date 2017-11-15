@@ -9,8 +9,8 @@ public class Csv {
 	private String categorieFilter = "../";
 	private String etiquetteName = "../";
 	private String fichesName = "../";
-	private int price;
-	private int tva = 20;
+	private float price;
+	private float tva = 20;
 	
 	public void readCsv(String file) {
 		Path fichierCsv = Paths.get(file); // file descriptor
@@ -55,16 +55,16 @@ public class Csv {
 		this.fichesName = fichesName;
 	}
 
-	public int getTva() {
+	public float getTva() {
 		return tva;
 	}
 
 	public void setTva(String tva) {		
-		this.tva = Integer.parseInt(tva);
+		this.tva = Float.parseFloat(tva);
 		setPrice();
 	}
 
-	public int getPrice() {
+	public float getPrice() {
 		return price;
 	}
 
