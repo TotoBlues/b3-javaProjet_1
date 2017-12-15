@@ -1,3 +1,5 @@
+import java.io.IOException;
+
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
@@ -21,7 +23,11 @@ public final class Param {
 		options.addOption("tva", true, "montant de la TVA à utiliser pour calculer le prix TTC (par défaut 20%)");
 	}
 	
-	public void parserCmd() {
+	public Csv getFileCsv() {
+		return fileCsv;
+	}
+	
+	public void parserCmd() throws IOException {
 		CommandLineParser parser = new DefaultParser();
 		try {
 			CommandLine cmd = parser.parse(options, args);
@@ -38,23 +44,34 @@ public final class Param {
 				fileCsv.setEtiquetteName("etiquette");
 			}
 			if (cmd.hasOption("fiche")) {
-				fileCsv.setFichesName("fiche");
+				fileCsv.setFicheName("fiche");
 			}
 			if (cmd.hasOption("tva")) {
 				fileCsv.setTva(cmd.getOptionValue("tva"));
 			}
+			if (cmd.hasOption("etiquette") || cmd.hasOption("fiche")) {
+				fileCsv.readCsv(fileCsv.getCsvPath());
+				}
+			else {
+				errHelp("No file creation request");
+			}
+
 		} catch (ParseException e) {
-			System.err.println("Failed to parse comand line properties");
-			System.err.println(e);
-			help();
+			String s = "Failed to parse comand line properties" + e;
+			errHelp(s);
 		}
-		fileCsv.readCsv(fileCsv.getCsvPath());
+	}
+	
+	private void errHelp(String s) {
+		System.err.println(s);
+		help();
+		System.exit(2);
 	}
 	
 	private void help() {
 		HelpFormatter formater = new HelpFormatter();
 		
-		formater.printHelp("java ­classpath <CLASSPATH> NomDeLaClasse <PARAMETRES>", options);
+		formater.printHelp("java -­classpath <CLASSPATH> NomDeLaClasse <PARAMETRES>", options);
 		System.exit(0);
 	}
 }

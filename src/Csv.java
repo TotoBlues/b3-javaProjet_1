@@ -4,25 +4,42 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
-public class Csv {
-	private String csvPath = "../";
-	private String categorieFilter = "../";
-	private String etiquetteName = "../";
-	private String fichesName = "../";
-	private float price;
-	private float tva = 20;
-	
-	public void readCsv(String file) {
-		Path fichierCsv = Paths.get(file); // file descriptor
-		try (Stream<String> linesFile = Files.lines(fichierCsv)) {
-			linesFile.forEach(item -> ParsingCsv.returnCsv(item));
-		}
-		catch (IOException e)
-		{
-			System.out.println(e);
-		}	
-	}
+import com.itextpdf.text.DocumentException;
 
+public class Csv {
+	private String csvPath = "./";
+	private String categorieFilter = "./";
+	private String etiquetteName = null;
+	private String ficheName = null;
+	private float tva = 20;
+	private PdfFile pdfList;
+	private Produit productList;
+	
+	public void readCsv(String file) throws IOException {
+		pdfList = new PdfFile(etiquetteName);
+		productList  = new Produit(ficheName);
+		Path fichierCsv = Paths.get(file);
+		try (Stream<String> linesFile = Files.lines(fichierCsv)) {
+			linesFile.forEach(item -> {
+				try {
+					if (etiquetteName != null) {
+						pdfList.fillFiche(ParsingCsv.returnCsv(item));
+					}
+					if (ficheName != null) {
+						productList.fillFiche(ParsingCsv.returnCsv(item));
+					}
+				} catch (DocumentException e) {
+					e.printStackTrace();
+					System.exit(2);
+				}
+			});
+			pdfList.closeDocument();
+		}
+		catch (IOException errIo) {
+			System.out.println(errIo);
+		}
+	}
+	
 	public String getCsvPath() {
 		return csvPath;
 	}
@@ -47,12 +64,12 @@ public class Csv {
 		this.etiquetteName = etiquetteName;
 	}
 
-	public String getFichesName() {
-		return fichesName;
+	public String getFicheName() {
+		return ficheName;
 	}
-
-	public void setFichesName(String fichesName) {
-		this.fichesName = fichesName;
+	
+	public void setFicheName(String fichesName) {
+		this.ficheName = fichesName;
 	}
 
 	public float getTva() {
@@ -61,21 +78,20 @@ public class Csv {
 
 	public void setTva(String tva) {		
 		this.tva = Float.parseFloat(tva);
-		setPrice();
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public void setPrice() {
-		this.price = price + (price * tva / 100);
 	}
 
 	// Main fonction
 	public static void main(String [] args) {
+		/* Csv fileCsv; */
 		Param param = new Param(args);
 		
-		param.parserCmd();
+		try {
+			param.parserCmd();
+			// fileCsv = param.getFileCsv();
+		}
+		catch(IOException e) {
+			System.exit(2);
+		}
+		System.exit(0);
 	}
 }

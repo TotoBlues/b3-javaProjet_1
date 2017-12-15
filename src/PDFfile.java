@@ -41,9 +41,10 @@ public class PDFfile {
 		}catch (IOException ioe)
 		{
 			ioe.printStackTrace();
+		}finally {
+			//fermeture de document
+			ficheProduit.close();
 		}
-		//fermeture de document
-		ficheProduit.close();
 
 	}
 	
