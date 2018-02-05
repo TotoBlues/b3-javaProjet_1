@@ -6,15 +6,11 @@ public class Produit extends FicheSortie {
 		super(path);
 	}
 	
-	public void fillFiche(String[] infos) throws DocumentException {
-		this.getDocument().add(new Paragraph());
-		getDocument().add(new Paragraph("Code: "));
-		getDocument().add(new Paragraph("Catégorie: "));
-		getDocument().add(new Paragraph("Titre"));
-		getDocument().add(new Paragraph("Description"));
-		getDocument().add(new Paragraph("Montant HT: "));
-		getDocument().add(new Paragraph("TVA: "));
-		getDocument().add(new Paragraph("Montant TTC: "));
-		super.closeDocument();
+	public void fillFiche(String[] infos, float tva) throws DocumentException {
+		try {
+			this.getDocument().add(new Paragraph(infos[0]));
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
 	}
 }

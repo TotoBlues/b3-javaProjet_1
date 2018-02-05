@@ -26,7 +26,7 @@ public class Csv {
 						pdfList.fillFiche(ParsingCsv.returnCsv(item));
 					}
 					if (ficheName != null) {
-						productList.fillFiche(ParsingCsv.returnCsv(item));
+						productList.fillFiche(ParsingCsv.returnCsv(item), tva);
 					}
 				} catch (DocumentException e) {
 					e.printStackTrace();
@@ -34,6 +34,7 @@ public class Csv {
 				}
 			});
 			pdfList.closeDocument();
+			productList.closeDocument();
 		}
 		catch (IOException errIo) {
 			System.out.println(errIo);
