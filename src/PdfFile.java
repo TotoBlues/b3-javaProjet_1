@@ -8,14 +8,15 @@ public class PdfFile extends FicheSortie {
 	}
 
 	public void createField(String[] tabInfos) {
-		
+
 	}
 
 	public void fillFiche(String[] tabInfos) throws DocumentException {
 		try {
 			this.getDocument().add(new Paragraph(tabInfos[0]));
-        } catch (DocumentException e) {
-            e.printStackTrace();
-        }
+
+		} catch (DocumentException e) {
+			e.printStackTrace();
+		}
 	}
 }
