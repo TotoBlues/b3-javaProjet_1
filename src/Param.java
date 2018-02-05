@@ -38,13 +38,13 @@ public final class Param {
 				fileCsv.setCsvPath(cmd.getOptionValue("i"));
 			}
 			if (cmd.hasOption("categorie")) {
-				fileCsv.setCategorieFilter("categorie");
+				fileCsv.setCategorieFilter(cmd.getOptionValue("categorie"));
 			}
 			if (cmd.hasOption("etiquette")) {
-				fileCsv.setEtiquetteName("etiquette");
+				fileCsv.setEtiquetteName(cmd.getOptionValue("etiquette"));
 			}
 			if (cmd.hasOption("fiche")) {
-				fileCsv.setFicheName("fiche");
+				fileCsv.setFicheName(cmd.getOptionValue("fiche"));
 			}
 			if (cmd.hasOption("tva")) {
 				fileCsv.setTva(cmd.getOptionValue("tva"));
