@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
+import com.google.zxing.WriterException;
 import com.itextpdf.text.DocumentException;
 
 public class Csv {
@@ -23,7 +24,7 @@ public class Csv {
 			linesFile.forEach(item -> {
 				try {
 					if (etiquetteName != null) {
-						pdfList.fillFiche(ParsingCsv.returnCsv(item));
+						pdfList.fillFiche(ParsingCsv.returnCsv(item), tva);
 					}
 					if (ficheName != null) {
 						productList.fillFiche(ParsingCsv.returnCsv(item), tva);
@@ -31,6 +32,12 @@ public class Csv {
 				} catch (DocumentException e) {
 					e.printStackTrace();
 					System.exit(2);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (WriterException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			});
 			pdfList.closeDocument();
