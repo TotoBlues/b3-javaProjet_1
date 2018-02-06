@@ -16,7 +16,7 @@ import com.google.zxing.qrcode.encoder.QRCode;
 public class PdfFile extends FicheSortie {
 	private String prix;
 	private PdfPTable table;
-	private int labelId = 0;
+	private int nbrItem = 0;
 	private String code;
 	private String name;
 
@@ -32,13 +32,12 @@ public class PdfFile extends FicheSortie {
 		this.prix = tabInfos[4];
 		this.code = tabInfos[0].toString();
 		this.name = tabInfos[1];
-		QrCodeGenerator qrcode = new QrCodeGenerator();
-		qrcode.createQrCode(code);
+		
 		BarcodeQRCode barcode = new BarcodeQRCode(code, 10, 1, null);
 		Image codeQrImage = barcode.getImage();
-        codeQrImage.scaleAbsolute(50, 5);
+        codeQrImage.scaleAbsolute(50, 50);
         
-		if (this.labelId % 16 == 0) {
+		if (this.nbrItem % 16 == 0) {
 			this.getDocument().newPage();
 			this.table = new PdfPTable(2);
 		}
@@ -52,30 +51,29 @@ public class PdfFile extends FicheSortie {
 			
 			PdfPCell cell = new PdfPCell();
 			
-			PdfPTable ttable = new PdfPTable(2);
+			PdfPTable tableQr = new PdfPTable(2);
 			PdfPCell cellInfos = new PdfPCell();
 			cellInfos.setHorizontalAlignment(Element.ALIGN_LEFT);
 			cellInfos.addElement(priceProduct);
 			cellInfos.addElement(codeProduct);
 			cellInfos.addElement(nameProduct);
 			cellQrCode.addElement(codeQrImage);
-			/*tcell1.addElement(qrcode);*/
 			
 			cellQrCode.setBorder(Rectangle.NO_BORDER);
 			cellInfos.setBorder(Rectangle.NO_BORDER);
 			
-			float[] columnWidths = {0.5f, 2f};
-			ttable.setWidths(columnWidths);
-			ttable.addCell(cellQrCode);
-			ttable.addCell(cellInfos);
-			cell.addElement(ttable);
+			float[] columnWidths = {1.5f, 2f};
+			tableQr.setWidths(columnWidths);
+			tableQr.addCell(cellQrCode);
+			tableQr.addCell(cellInfos);
+			cell.addElement(tableQr);
 			this.table.addCell(cell);
 
 		} catch (DocumentException e) {
 			e.printStackTrace();
 		}
-		this.labelId++;
-		if (this.labelId % 16 == 0) {
+		this.nbrItem++;
+		if (this.nbrItem % 16 == 0) {
 			this.getDocument().add(this.table);
 		}
 	}
