@@ -10,10 +10,10 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
 public class QrCodeGenerator {
-	public static void createQrCode(String code) throws IOException, WriterException {
+	public void createQrCode(String code) throws IOException, WriterException {
 		String content = code;
 		String filename = "qrcode.png";
-		BufferedImage image = generate(content, 150);
+		BufferedImage image = generate(content, 50);
 		ImageIO.write(image, "PNG", new File(filename));
 	}
 

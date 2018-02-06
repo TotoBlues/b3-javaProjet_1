@@ -57,7 +57,7 @@ import com.itextpdf.text.Rectangle;
 		PdfPCell cell5 = new PdfPCell(new Paragraph(""));
 		PdfPCell cell6 = new PdfPCell(new Paragraph(""));
 		PdfPCell cell7 = new PdfPCell(new Paragraph("TVA: "));
-		PdfPCell cell8 = new PdfPCell(new Paragraph((this.prix * (tva/100)) + "%"));
+		PdfPCell cell8 = new PdfPCell(new Paragraph((this.prix * (tva/100)) + "€"));
 		
 		cell8.setHorizontalAlignment(PdfPCell.ALIGN_RIGHT);
 		PdfPCell cell9 = new PdfPCell(new Paragraph(""));
