@@ -7,11 +7,9 @@ import com.itextpdf.text.Rectangle;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import com.google.zxing.WriterException;
-import com.google.zxing.qrcode.encoder.QRCode;
 
 public class PdfFile extends FicheSortie {
 	private String prix;
@@ -29,6 +27,8 @@ public class PdfFile extends FicheSortie {
 	}
 	
 	public void fillFiche(String[] tabInfos, float tva) throws DocumentException, IOException, WriterException {
+		if (tabInfos == null)
+			return;
 		this.prix = tabInfos[4];
 		this.code = tabInfos[0].toString();
 		this.name = tabInfos[1];

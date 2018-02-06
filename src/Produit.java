@@ -14,6 +14,8 @@ import com.itextpdf.text.Rectangle;
 	}
 	
 	public void fillFiche(String[] infos, float tva) throws DocumentException {
+		if (infos == null)
+			return;
 		this.prix = Float.parseFloat(infos[4].replace(',', '.'));
 		this.getDocument().add(new Paragraph());
 		

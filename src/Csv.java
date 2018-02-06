@@ -15,7 +15,7 @@ public class Csv {
 	private float tva = 20;
 	private PdfFile pdfList;
 	private Produit productList;
-	
+
 	public void readCsv(String file) throws IOException {
 		pdfList = new PdfFile(etiquetteName);
 		productList  = new Produit(ficheName);
@@ -24,10 +24,10 @@ public class Csv {
 			linesFile.forEach(item -> {
 				try {
 					if (etiquetteName != null) {
-						pdfList.fillFiche(ParsingCsv.returnCsv(item), tva);
+						pdfList.fillFiche(ParsingCsv.returnCsv(item, categorieFilter), tva);
 					}
 					if (ficheName != null) {
-						productList.fillFiche(ParsingCsv.returnCsv(item), tva);
+						productList.fillFiche(ParsingCsv.returnCsv(item, categorieFilter), tva);
 					}
 				} catch (DocumentException e) {
 					e.printStackTrace();
